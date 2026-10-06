@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>متجري | منتجات مميزة</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Tahoma, sans-serif;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at top right, #2563eb 0%, transparent 35%),
+                radial-gradient(circle at bottom left, #0ea5e9 0%, transparent 30%),
+                linear-gradient(135deg, #06142f, #0b2a5b 50%, #063b70);
+            min-height: 100vh;
+            color: white;
+        }
+
+        /* Header */
+
+        header {
+            padding: 25px 20px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.18);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,.12);
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #38bdf8;
+        }
+
+        header p {
+            margin-top: 8px;
+            color: #dbeafe;
+            font-size: 15px;
+        }
+
+        /* Hero */
+
+        .hero {
+            max-width: 1100px;
+            margin: auto;
+            padding: 55px 20px 30px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #38bdf8;
+        }
+
+        .hero p {
+            color: #dbeafe;
+            font-size: 17px;
+        }
+
+        /* Products */
+
+        .products {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 20px 60px;
+
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+
+            gap: 25px;
+        }
+
+        .product-card {
+            background: rgba(255,255,255,.97);
+            color: #111827;
+
+            border-radius: 22px;
+            overflow: hidden;
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,.25);
+
+            transition: .3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-7px);
+        }
+
+        /* Image */
+
+        .main-image-container {
+            position: relative;
+            background: #f8fafc;
+            height: 320px;
+            overflow: hidden;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 15px;
+
+            transition: .3s;
+        }
+
+        /* Arrows */
+
+        .image-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+
+            width: 42px;
+            height: 42px;
+
+            border: none;
+            border-radius: 50%;
+
+            background: rgba(0,0,0,.55);
+            color: white;
+
+            font-size: 24px;
+            cursor: pointer;
+
+            z-index: 2;
+        }
+
+        .prev {
+            left: 12px;
+        }
+
+        .next {
+            right: 12px;
+        }
+
+        /* Thumbnails */
+
+        .thumbnails {
+            display: flex;
+            gap: 7px;
+            padding: 10px;
+            overflow-x: auto;
+            background: #f1f5f9;
+        }
+
+        .thumbnail {
+            width: 55px;
+            height: 55px;
+
+            object-fit: cover;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            border: 2px solid transparent;
+        }
+
+        .thumbnail.active {
+            border-color: #2563eb;
+        }
+
+        /* Product Info */
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-info h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2563eb;
+            margin: 15px 0;
+        }
+
+        .order-btn {
+            width: 100%;
+            padding: 15px;
+
+            border: none;
+            border-radius: 12px;
+
+            background: #22c55e;
+            color: white;
+
+            font-size: 18px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: .2s;
+        }
+
+        .order-btn:hover {
+            background: #16a34a;
+            transform: scale(1.02);
+        }
+
+        /* Modal */
+
+        .modal {
+            display: none;
+
+            position: fixed;
+            inset: 0;
+
+            background: rgba(0,0,0,.7);
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 15px;
+
+            z-index: 100;
+        }
+
+        .modal-box {
+            background: white;
+            color: #111827;
+
+            width: 100%;
+            max-width: 470px;
+
+            border-radius: 20px;
+
+            padding: 25px;
+
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-box h2 {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .selected-product {
+            text-align: center;
+            color: #2563eb;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .input {
+            width: 100%;
+
+            padding: 14px;
+
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+
+            margin-bottom: 12px;
+
+            font-size: 16px;
+
+            outline: none;
+        }
+
+        .input:focus {
+            border-color: #2563eb;
+        }
+
+        .confirm-btn {
+            width: 100%;
+
+            padding: 15px;
+
+            border: none;
+            border-radius: 12px;
+
+            background: #22c55e;
+            color: white;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .close-btn {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 15px;
+
+            color: #64748b;
+
+            cursor: pointer;
+        }
+
+        /* Footer */
+
+        footer {
+            text-align: center;
+            padding: 25px;
+
+            background: rgba(0,0,0,.2);
+
+            color: #cbd5e1;
+        }
+
+        /* Mobile */
+
+        @media(max-width:600px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .main-image-container {
+                height: 280px;
+            }
+
+            .products {
+                padding: 20px 12px 50px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        🛍️ <span>متجري</span>
+    </div>
+
+    <p>
+        منتجات مميزة بأسعار مناسبة
+    </p>
+
+</header>
+
+
+
+<section class="hero">
+
+    <h1>
+        اختار منتجك <span>واطلب بسهولة</span>
+    </h1>
+
+    <p>
+        اطلب المنتج، اكتب بياناتك، وسيتم تحويل الطلب مباشرة إلى واتساب
+    </p>
+
+</section>
+
+
+
+<section class="products">
+
+
+    <!-- PRODUCT 1 -->
+
+    <div class="product-card">
+
+        <div class="main-image-container">
+
+            <button
+                class="image-btn prev"
+                onclick="changeImage(-1)">
+                ‹
+            </button>
+
+            <img
+                id="mainImage"
+                class="main-image"
+                src="images/image-1.jpg"
+                alt="AirPods Pro Sim Original">
+
+            <button
+                class="image-btn next"
+                onclick="changeImage(1)">
+                ›
+            </button>
+
+        </div>
+
+
+        <div class="thumbnails">
+
+            <img
+                class="thumbnail active"
+                src="images/image-1.jpg"
+                onclick="selectImage(0)">
+
+            <img
+                class="thumbnail"
+                src="images/image-2.jpg"
+                onclick="selectImage(1)">
+
+            <img
+                class="thumbnail"
+                src="images/image-3.jpg"
+                onclick="selectImage(2)">
+
+            <img
+                class="thumbnail"
+                src="images/image-4.jpg"
+                onclick="selectImage(3)">
+
+            <img
+                class="thumbnail"
+                src="images/image-5.jpg"
+                onclick="selectImage(4)">
+
+        </div>
+
+
+        <div class="product-info">
+
+            <h2>
+                AirPods Pro Sim Original
+            </h2>
+
+            <p class="description">
+
+                سماعة أذن لاسلكية Bluetooth باللون الأسود،
+                مناسبة للموسيقى والمكالمات والدراسة والعمل
+                والرياضة والاستخدام اليومي.
+
+            </p>
+
+
+            <div class="price">
+                650 جنيه
+            </div>
+
+
+            <button
+                class="order-btn"
+                onclick="openOrder()">
+
+                🛒 اطلب الآن
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ORDER MODAL -->
+
+<div
+    class="modal"
+    id="orderModal">
+
+
+    <div class="modal-box">
+
+
+        <h2>
+            🛒 بيانات الطلب
+        </h2>
+
+
+        <div class="selected-product">
+            AirPods Pro Sim Original — 650 جنيه
+        </div>
+
+
+        <input
+            class="input"
+            id="customerName"
+            type="text"
+            placeholder="الاسم بالكامل">
+
+
+        <input
+            class="input"
+            id="customerPhone"
+            type="tel"
+            placeholder="رقم الموبايل">
+
+
+        <input
+            class="input"
+            id="customerGovernorate"
+            type="text"
+            placeholder="المحافظة">
+
+
+        <input
+            class="input"
+            id="customerAddress"
+            type="text"
+            placeholder="العنوان بالتفصيل">
+
+
+        <input
+            class="input"
+            id="quantity"
+            type="number"
+            min="1"
+            value="1"
+            placeholder="الكمية">
+
+
+        <button
+            class="confirm-btn"
+            onclick="sendOrder()">
+
+            تأكيد الطلب عبر واتساب 📲
+
+        </button>
+
+
+        <span
+            class="close-btn"
+            onclick="closeOrder()">
+
+            إلغاء
+
+        </span>
+
+
+    </div>
+
+</div>
+
+
+
+<footer>
+
+    جميع الحقوق محفوظة © 2026
+
+</footer>
+
+
+
+<script>
+
+
+/* =========================
+   صور المنتج
+========================= */
+
+const images = [
+
+    "images/image-1.jpg",
+    "images/image-2.jpg",
+    "images/image-3.jpg",
+    "images/image-4.jpg",
+    "images/image-5.jpg"
+
+];
+
+
+let currentImage = 0;
+
+
+
+/* تغيير الصورة */
+
+function selectImage(index) {
+
+    currentImage = index;
+
+    document.getElementById("mainImage").src =
+        images[currentImage];
+
+    updateThumbnails();
+
+}
+
+
+
+/* الصورة التالية */
+
+function changeImage(direction) {
+
+    currentImage += direction;
+
+    if (currentImage >= images.length) {
+        currentImage = 0;
+    }
+
+    if (currentImage < 0) {
+        currentImage = images.length - 1;
+    }
+
+    document.getElementById("mainImage").src =
+        images[currentImage];
+
+    updateThumbnails();
+
+}
+
+
+
+/* تحديث الصور الصغيرة */
+
+function updateThumbnails() {
+
+    const thumbnails =
+        document.querySelectorAll(".thumbnail");
+
+    thumbnails.forEach((thumb, index) => {
+
+        thumb.classList.remove("active");
+
+        if (index === currentImage) {
+            thumb.classList.add("active");
+        }
+
+    });
+
+}
+
+
+
+/* =========================
+   فتح فورم الطلب
+========================= */
+
+function openOrder() {
+
+    document.getElementById("orderModal")
+        .style.display = "flex";
+
+}
+
+
+
+/* غلق الفورم */
+
+function closeOrder() {
+
+    document.getElementById("orderModal")
+        .style.display = "none";
+
+}
+
+
+
+/* =========================
+   إرسال الطلب لواتساب
+========================= */
+
+function sendOrder() {
+
+    const name =
+        document.getElementById("customerName").value.trim();
+
+    const phone =
+        document.getElementById("customerPhone").value.trim();
+
+    const governorate =
+        document.getElementById("customerGovernorate").value.trim();
+
+    const address =
+        document.getElementById("customerAddress").value.trim();
+
+    const quantity =
+        document.getElementById("quantity").value;
+
+
+    /* التأكد من البيانات */
+
+    if (
+        !name ||
+        !phone ||
+        !governorate ||
+        !address
+    ) {
+
+        alert("من فضلك اكتب كل البيانات المطلوبة");
+
+        return;
+
+    }
+
+
+    /* بيانات المنتج */
+
+    const product =
+        "AirPods Pro Sim Original";
+
+    const price =
+        650;
+
+
+    const total =
+        price * Number(quantity);
+
+
+    /* رسالة واتساب */
+
+    const message =
+
+`🛒 طلب جديد من المتجر
+
+📦 المنتج: ${product}
+
+🔢 الكمية: ${quantity}
+
+💰 سعر الوحدة: ${price} جنيه
+
+💵 الإجمالي: ${total} جنيه
+
+👤 الاسم: ${name}
+
+📱 رقم الموبايل: ${phone}
+
+📍 المحافظة: ${governorate}
+
+🏠 العنوان:
+${address}
+
+شكراً لطلبك ❤️`;
+
+
+    /* رقم واتساب */
+
+    const whatsappNumber =
+        "201105850117";
+
+
+    /* إنشاء الرابط */
+
+    const whatsappURL =
+        "https://wa.me/" +
+        whatsappNumber +
+        "?text=" +
+        encodeURIComponent(message);
+
+
+    /* فتح واتساب */
+
+    window.location.href =
+        whatsappURL;
+
+}
+
+
+</script>
+
+
+</body>
+</html>

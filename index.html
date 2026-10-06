@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>متجري</title>
+<title>متجري | منتجات مميزة</title>
 
 <style>
 *{
@@ -15,198 +15,481 @@
 }
 
 body{
-    background:linear-gradient(135deg,#061b4f,#0879d1,#00a8e8);
+    background:
+    radial-gradient(circle at top right,#2563eb,transparent 35%),
+    radial-gradient(circle at bottom left,#0ea5e9,transparent 30%),
+    linear-gradient(135deg,#06142f,#0b2a5b,#063b70);
+
     min-height:100vh;
-    color:#111;
+    color:white;
 }
+
+/* HEADER */
 
 header{
     text-align:center;
-    color:white;
     padding:30px 15px;
+    background:rgba(0,0,0,.18);
+    backdrop-filter:blur(12px);
 }
 
-header h1{
+.logo{
     font-size:32px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#38bdf8;
 }
 
 header p{
     margin-top:8px;
+    color:#dbeafe;
 }
 
+/* HERO */
+
+.hero{
+    text-align:center;
+    padding:45px 15px 25px;
+}
+
+.hero h1{
+    font-size:38px;
+    margin-bottom:12px;
+}
+
+.hero h1 span{
+    color:#38bdf8;
+}
+
+.hero p{
+    color:#dbeafe;
+}
+
+/* PRODUCTS */
+
+.products{
+    max-width:1100px;
+    margin:auto;
+    padding:25px 15px 60px;
+
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(280px,1fr));
+
+    gap:25px;
+}
+
+/* PRODUCT CARD */
+
 .product{
-    width:92%;
-    max-width:420px;
-    margin:20px auto 50px;
     background:white;
+    color:#111827;
+
     border-radius:22px;
     overflow:hidden;
-    box-shadow:0 15px 40px rgba(0,0,0,.25);
+
+    box-shadow:
+    0 20px 50px rgba(0,0,0,.3);
+
+    transition:.3s;
+}
+
+.product:hover{
+    transform:translateY(-7px);
+}
+
+/* IMAGE */
+
+.main-image-container{
+    position:relative;
+    height:320px;
+    background:#f8fafc;
 }
 
 .main-image{
     width:100%;
-    height:330px;
+    height:100%;
     object-fit:contain;
-    background:#f8fafc;
+    padding:15px;
 }
+
+.image-btn{
+    position:absolute;
+
+    top:50%;
+    transform:translateY(-50%);
+
+    width:42px;
+    height:42px;
+
+    border:0;
+    border-radius:50%;
+
+    background:rgba(0,0,0,.55);
+    color:white;
+
+    font-size:25px;
+
+    cursor:pointer;
+
+    z-index:2;
+}
+
+.prev{
+    left:10px;
+}
+
+.next{
+    right:10px;
+}
+
+/* THUMBNAILS */
 
 .thumbnails{
     display:flex;
     gap:8px;
+
     padding:10px;
+
     overflow-x:auto;
+
+    background:#f1f5f9;
 }
 
-.thumbnails img{
-    width:60px;
-    height:60px;
+.thumbnail{
+    width:58px;
+    height:58px;
+
     object-fit:cover;
-    border-radius:8px;
+
+    border-radius:9px;
+
     cursor:pointer;
+
     border:2px solid transparent;
 }
 
-.thumbnails img.active{
-    border-color:#0879d1;
+.thumbnail.active{
+    border-color:#2563eb;
 }
+
+/* INFO */
 
 .info{
     padding:20px;
 }
 
 .info h2{
-    font-size:22px;
+    font-size:21px;
     margin-bottom:10px;
 }
 
 .description{
-    color:#666;
+    color:#64748b;
     line-height:1.7;
+    font-size:14px;
 }
 
 .price{
-    color:#0879d1;
     font-size:28px;
     font-weight:bold;
+
+    color:#2563eb;
+
     margin:15px 0;
 }
 
 .order{
     width:100%;
-    border:0;
+
     padding:15px;
+
+    border:0;
     border-radius:12px;
-    background:#20c967;
+
+    background:#22c55e;
     color:white;
+
     font-size:18px;
     font-weight:bold;
+
     cursor:pointer;
+
+    transition:.2s;
 }
+
+.order:hover{
+    background:#16a34a;
+    transform:scale(1.02);
+}
+
+/* MODAL */
 
 .modal{
     display:none;
+
     position:fixed;
+
     inset:0;
-    background:rgba(0,0,0,.7);
+
+    background:rgba(0,0,0,.72);
+
     align-items:center;
     justify-content:center;
+
     padding:15px;
+
+    z-index:100;
 }
 
-.box{
+.modal-box{
     background:white;
+
+    color:#111827;
+
     width:100%;
-    max-width:430px;
+    max-width:450px;
+
     padding:25px;
+
     border-radius:20px;
+
+    max-height:90vh;
+    overflow-y:auto;
 }
 
-.box h2{
+.modal-box h2{
     text-align:center;
-    margin-bottom:15px;
+    margin-bottom:8px;
 }
 
-.box input{
+.selected-product{
+    text-align:center;
+
+    color:#2563eb;
+
+    font-weight:bold;
+
+    margin-bottom:20px;
+}
+
+.input{
     width:100%;
+
     padding:14px;
+
     margin-bottom:12px;
-    border:1px solid #ddd;
+
+    border:1px solid #d1d5db;
+
     border-radius:10px;
+
     font-size:16px;
+
+    outline:none;
+}
+
+.input:focus{
+    border-color:#2563eb;
 }
 
 .confirm{
     width:100%;
+
     padding:15px;
+
     border:0;
-    border-radius:10px;
-    background:#20c967;
+
+    border-radius:12px;
+
+    background:#22c55e;
+
     color:white;
+
     font-size:17px;
+
     font-weight:bold;
+
+    cursor:pointer;
 }
 
 .close{
     display:block;
+
     text-align:center;
+
     margin-top:15px;
-    color:#777;
+
+    color:#64748b;
+
     cursor:pointer;
 }
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+
+    padding:25px;
+
+    color:#cbd5e1;
+
+    background:rgba(0,0,0,.2);
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .products{
+        padding:20px 12px 50px;
+    }
+
+    .main-image-container{
+        height:290px;
+    }
+}
 </style>
+
 </head>
+
 
 <body>
 
+
+<!-- HEADER -->
+
 <header>
-    <h1>🛍️ متجري</h1>
-    <p>منتجات مميزة بأسعار مناسبة</p>
+
+    <div class="logo">
+        🛍️ <span>متجري</span>
+    </div>
+
+    <p>
+        منتجات مميزة بأسعار مناسبة
+    </p>
+
 </header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <h1>
+        اختار منتجك
+        <span>واطلب بسهولة</span>
+    </h1>
+
+    <p>
+        اكتب بياناتك وسيصلك الطلب بسهولة
+    </p>
+
+</section>
+
+
+<!-- PRODUCTS -->
+
+<section class="products">
+
+
+<!-- =========================
+     PRODUCT 1
+========================= -->
 
 <div class="product">
 
-    <img id="mainImage"
-         class="main-image"
-         src="image-1.jpg">
+    <div class="main-image-container">
 
-    <div class="thumbnails">
+        <button
+        class="image-btn prev"
+        onclick="changeAirpodsImage(-1)">
+        ‹
+        </button>
 
-        <img src="image-1.jpg"
-             class="active"
-             onclick="changeImage(this)">
 
-        <img src="image-2.jpg"
-             onclick="changeImage(this)">
+        <img
+        id="airpodsMain"
+        class="main-image"
+        src="image-1.jpg"
+        alt="AirPods Pro Sim Original">
 
-        <img src="image-3.jpg"
-             onclick="changeImage(this)">
 
-        <img src="image-4.jpg"
-             onclick="changeImage(this)">
-
-        <img src="image-5.jpg"
-             onclick="changeImage(this)">
+        <button
+        class="image-btn next"
+        onclick="changeAirpodsImage(1)">
+        ›
+        </button>
 
     </div>
 
+
+    <div class="thumbnails">
+
+        <img
+        class="thumbnail active"
+        src="image-1.jpg"
+        onclick="selectAirpodsImage(0)">
+
+        <img
+        class="thumbnail"
+        src="image-2.jpg"
+        onclick="selectAirpodsImage(1)">
+
+        <img
+        class="thumbnail"
+        src="image-3.jpg"
+        onclick="selectAirpodsImage(2)">
+
+        <img
+        class="thumbnail"
+        src="image-4.jpg"
+        onclick="selectAirpodsImage(3)">
+
+        <img
+        class="thumbnail"
+        src="image-5.jpg"
+        onclick="selectAirpodsImage(4)">
+
+    </div>
+
+
     <div class="info">
 
-        <h2>AirPods Pro Sim Original</h2>
+        <h2>
+            AirPods Pro Sim Original
+        </h2>
 
         <p class="description">
-            سماعة أذن لاسلكية Bluetooth باللون الأسود،
-            مناسبة للموسيقى والمكالمات والدراسة والعمل
+
+            سماعة أذن لاسلكية Bluetooth
+            باللون الأسود، مناسبة للموسيقى
+            والمكالمات والدراسة والعمل
             والرياضة والاستخدام اليومي.
+
         </p>
+
 
         <div class="price">
             650 جنيه
         </div>
 
-        <button class="order"
-                onclick="openForm()">
+
+        <button
+        class="order"
+        onclick="openOrder(
+        'AirPods Pro Sim Original',
+        650
+        )">
+
             🛒 اطلب الآن
+
         </button>
 
     </div>
@@ -214,149 +497,449 @@ header p{
 </div>
 
 
-<div class="modal" id="modal">
 
-    <div class="box">
+<!-- =========================
+     PRODUCT 2
+========================= -->
 
-        <h2>🛒 بيانات الطلب</h2>
+<div class="product">
 
-        <input id="name"
-               type="text"
-               placeholder="الاسم بالكامل">
+    <div class="main-image-container">
 
-        <input id="phone"
-               type="tel"
-               placeholder="رقم الموبايل">
-
-        <input id="governorate"
-               type="text"
-               placeholder="المحافظة">
-
-        <input id="address"
-               type="text"
-               placeholder="العنوان بالتفصيل">
-
-        <input id="quantity"
-               type="number"
-               value="1"
-               min="1"
-               placeholder="الكمية">
-
-        <button class="confirm"
-                onclick="sendOrder()">
-            تأكيد الطلب عبر واتساب 📲
+        <button
+        class="image-btn prev"
+        onclick="changeSpeakerImage(-1)">
+        ‹
         </button>
 
-        <span class="close"
-              onclick="closeForm()">
-            إلغاء
-        </span>
+
+        <img
+        id="speakerMain"
+        class="main-image"
+        src="speaker-1.jpg"
+        alt="مكبر صوت بلوتوث رائد الفضاء">
+
+
+        <button
+        class="image-btn next"
+        onclick="changeSpeakerImage(1)">
+        ›
+        </button>
+
+    </div>
+
+
+    <div class="thumbnails">
+
+        <img
+        class="thumbnail active"
+        src="speaker-1.jpg"
+        onclick="selectSpeakerImage(0)">
+
+        <img
+        class="thumbnail"
+        src="speaker-2.png"
+        onclick="selectSpeakerImage(1)">
+
+        <img
+        class="thumbnail"
+        src="speaker-3.jpg"
+        onclick="selectSpeakerImage(2)">
+
+    </div>
+
+
+    <div class="info">
+
+        <h2>
+            مكبر صوت بلوتوث رائد الفضاء 🚀
+        </h2>
+
+
+        <p class="description">
+
+            عيش تجربة صوت مختلفة مع
+            سبيكر رائد الفضاء بتصميم
+            مميز يجمع بين الشكل الكيوت
+            والصوت الرائع.
+
+        </p>
+
+
+        <div class="price">
+            630 جنيه
+        </div>
+
+
+        <button
+        class="order"
+        onclick="openOrder(
+        'مكبر صوت بلوتوث رائد الفضاء',
+        630
+        )">
+
+            🛒 اطلب الآن
+
+        </button>
 
     </div>
 
 </div>
+
+
+</section>
+
+
+<!-- =========================
+     ORDER FORM
+========================= -->
+
+<div
+id="modal"
+class="modal">
+
+
+<div class="modal-box">
+
+
+    <h2>
+        🛒 بيانات الطلب
+    </h2>
+
+
+    <div
+    id="selectedProduct"
+    class="selected-product">
+
+        المنتج
+
+    </div>
+
+
+    <input
+    class="input"
+    id="name"
+    type="text"
+    placeholder="الاسم بالكامل">
+
+
+    <input
+    class="input"
+    id="phone"
+    type="tel"
+    placeholder="رقم الموبايل">
+
+
+    <input
+    class="input"
+    id="governorate"
+    type="text"
+    placeholder="المحافظة">
+
+
+    <input
+    class="input"
+    id="address"
+    type="text"
+    placeholder="العنوان بالتفصيل">
+
+
+    <input
+    class="input"
+    id="quantity"
+    type="number"
+    min="1"
+    value="1"
+    placeholder="الكمية">
+
+
+    <button
+    class="confirm"
+    onclick="sendOrder()">
+
+        تأكيد الطلب عبر واتساب 📲
+
+    </button>
+
+
+    <span
+    class="close"
+    onclick="closeOrder()">
+
+        إلغاء
+
+    </span>
+
+
+</div>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    جميع الحقوق محفوظة © 2026
+
+</footer>
+
 
 
 <script>
 
-function changeImage(image){
+/* =================================
+   AIRPODS IMAGES
+================================= */
 
-    document.getElementById("mainImage").src =
-        image.src;
+const airpodsImages = [
 
-    document.querySelectorAll(".thumbnails img")
-    .forEach(img => img.classList.remove("active"));
+    "image-1.jpg",
+    "image-2.jpg",
+    "image-3.jpg",
+    "image-4.jpg",
+    "image-5.jpg"
 
-    image.classList.add("active");
+];
+
+
+let airpodsCurrent = 0;
+
+
+function selectAirpodsImage(index){
+
+    airpodsCurrent = index;
+
+    document.getElementById("airpodsMain").src =
+        airpodsImages[airpodsCurrent];
+
 }
 
 
-function openForm(){
+function changeAirpodsImage(direction){
 
-    document.getElementById("modal")
-    .style.display="flex";
+    airpodsCurrent += direction;
 
-}
+    if(
+        airpodsCurrent >=
+        airpodsImages.length
+    ){
 
+        airpodsCurrent = 0;
 
-function closeForm(){
-
-    document.getElementById("modal")
-    .style.display="none";
-
-}
-
-
-function sendOrder(){
-
-    let name =
-        document.getElementById("name").value.trim();
-
-    let phone =
-        document.getElementById("phone").value.trim();
-
-    let governorate =
-        document.getElementById("governorate").value.trim();
-
-    let address =
-        document.getElementById("address").value.trim();
-
-    let quantity =
-        document.getElementById("quantity").value;
-
-
-    if(!name || !phone || !governorate || !address){
-
-        alert("من فضلك اكتب كل البيانات");
-
-        return;
     }
 
 
-    let price = 650;
+    if(airpodsCurrent < 0){
 
-    let total =
-        price * Number(quantity);
+        airpodsCurrent =
+            airpodsImages.length - 1;
+
+    }
 
 
-    let message =
+    document.getElementById("airpodsMain").src =
+        airpodsImages[airpodsCurrent];
+
+}
+
+
+
+/* =================================
+   SPEAKER IMAGES
+================================= */
+
+const speakerImages = [
+
+    "speaker-1.jpg",
+    "speaker-2.png",
+    "speaker-3.jpg"
+
+];
+
+
+let speakerCurrent = 0;
+
+
+function selectSpeakerImage(index){
+
+    speakerCurrent = index;
+
+    document.getElementById("speakerMain").src =
+        speakerImages[speakerCurrent];
+
+}
+
+
+function changeSpeakerImage(direction){
+
+    speakerCurrent += direction;
+
+
+    if(
+        speakerCurrent >=
+        speakerImages.length
+    ){
+
+        speakerCurrent = 0;
+
+    }
+
+
+    if(speakerCurrent < 0){
+
+        speakerCurrent =
+            speakerImages.length - 1;
+
+    }
+
+
+    document.getElementById("speakerMain").src =
+        speakerImages[speakerCurrent];
+
+}
+
+
+
+/* =================================
+   ORDER
+================================= */
+
+let selectedProduct = "";
+
+let selectedPrice = 0;
+
+
+function openOrder(product, price){
+
+    selectedProduct = product;
+
+    selectedPrice = price;
+
+
+    document.getElementById(
+        "selectedProduct"
+    ).innerText =
+        product + " — " + price + " جنيه";
+
+
+    document.getElementById("modal")
+        .style.display = "flex";
+
+}
+
+
+
+function closeOrder(){
+
+    document.getElementById("modal")
+        .style.display = "none";
+
+}
+
+
+
+/* =================================
+   WHATSAPP
+================================= */
+
+function sendOrder(){
+
+    const name =
+        document.getElementById("name")
+        .value.trim();
+
+
+    const phone =
+        document.getElementById("phone")
+        .value.trim();
+
+
+    const governorate =
+        document.getElementById("governorate")
+        .value.trim();
+
+
+    const address =
+        document.getElementById("address")
+        .value.trim();
+
+
+    const quantity =
+        document.getElementById("quantity")
+        .value;
+
+
+    if(
+        !name ||
+        !phone ||
+        !governorate ||
+        !address
+    ){
+
+        alert(
+            "من فضلك اكتب كل البيانات المطلوبة"
+        );
+
+        return;
+
+    }
+
+
+    const total =
+        selectedPrice *
+        Number(quantity);
+
+
+    const message =
 
 `🛒 طلب جديد من المتجر
 
-📦 المنتج: AirPods Pro Sim Original
+📦 المنتج:
+${selectedProduct}
 
-🔢 الكمية: ${quantity}
+🔢 الكمية:
+${quantity}
 
-💰 سعر الوحدة: ${price} جنيه
+💰 سعر الوحدة:
+${selectedPrice} جنيه
 
-💵 الإجمالي: ${total} جنيه
+💵 الإجمالي:
+${total} جنيه
 
-👤 الاسم: ${name}
+👤 الاسم:
+${name}
 
-📱 رقم الموبايل: ${phone}
+📱 رقم الموبايل:
+${phone}
 
-📍 المحافظة: ${governorate}
+📍 المحافظة:
+${governorate}
 
 🏠 العنوان:
-${address}`;
+${address}
+
+شكراً لطلبك ❤️`;
 
 
-    let whatsapp =
+    const whatsappNumber =
         "201105850117";
 
 
-    let url =
+    const whatsappURL =
         "https://wa.me/" +
-        whatsapp +
+        whatsappNumber +
         "?text=" +
         encodeURIComponent(message);
 
 
-    window.location.href=url;
+    window.location.href =
+        whatsappURL;
 
 }
 
 </script>
+
 
 </body>
 </html>
